@@ -20,10 +20,10 @@ function GameObject(attributes) {
   this.createdAt = attributes.createdAt;
   this.name = attributes.name;
   this.dimensions = attributes.dimensions;
-  this.destroy = function() {
-    return `${this.name} was removed from the game.`;
-  };
 }
+GameObject.prototype.destroy = function() {
+  return `${this.name} was removed from the game.`;
+};
 
 /*
   === CharacterStats ===
@@ -35,12 +35,12 @@ function GameObject(attributes) {
 function CharacterStats(charStats) {
   GameObject.call(this, charStats);
   this.healthPoints = charStats.healthPoints;
-  this.takeDamage = function() {
-    return `${this.name} took damage.`;
-  };
 }
 
 CharacterStats.prototype = Object.create(GameObject.prototype);
+CharacterStats.prototype.takeDamage = function() {
+  return `${this.name} took damage.`;
+};
 
 /*
   === Humanoid (Having an appearance or character resembling that of a human.) ===
@@ -57,12 +57,12 @@ function Humanoid(humanoidAttributes) {
   this.team = humanoidAttributes.team;
   this.weapons = humanoidAttributes.weapons;
   this.language = humanoidAttributes.language;
-  this.greet = function() {
-    return `${this.name} offers a greeting in ${this.language}`;
-  };
 }
 
 Humanoid.prototype = Object.create(CharacterStats.prototype);
+Humanoid.prototype.greet = function() {
+  return `${this.name} offers a greeting in ${this.language}`;
+};
 
 /*
  * Inheritance chain: GameObject -> CharacterStats -> Humanoid
@@ -131,3 +131,54 @@ console.log(swordsman.destroy()); // Sir Mustachio was removed from the game.
 // * Create Villain and Hero constructor functions that inherit from the Humanoid constructor function.
 // * Give the Hero and Villains different methods that could be used to remove health points from objects which could result in destruction if health gets to 0 or drops below 0;
 // * Create two new objects, one a villain and one a hero and fight it out with methods!
+
+// Humanoid.prototype.punch = function() {
+//   let damage = Math.round(Math.random() * 3);
+//   this.healthPoints = this.healthPoints - damage;
+//   return `${this.name} took a punch to the face and took ${damage} damage. ${
+//     this.healthPoints
+//   } remaining.`;
+// };
+
+// function Villain(villainStats) {
+//   Humanoid.call(this, villainStats);
+// }
+
+// Villain.prototype = Object.create(Humanoid.prototype);
+
+// function Hero(heroStats) {
+//   Humanoid.call(this, heroStats);
+// }
+
+// Hero.prototype = Object.create(Humanoid.prototype);
+
+// const newVillain = new Villain({
+//   createdAt: new Date(),
+//   dimensions: {
+//     length: 2,
+//     width: 2,
+//     height: 2
+//   },
+//   healthPoints: 15,
+//   name: "Sir Mustachio",
+//   team: "The Round Table",
+//   weapons: ["Giant Sword", "Shield"],
+//   language: "Common Tongue"
+// });
+
+// const newHero = new Hero({
+//   createdAt: new Date(),
+//   dimensions: {
+//     length: 1,
+//     width: 2,
+//     height: 4
+//   },
+//   healthPoints: 10,
+//   name: "Lilith",
+//   team: "Forest Kingdom",
+//   weapons: ["Bow", "Dagger"],
+//   language: "Elvish"
+// });
+
+// console.log(newHero.punch());
+// console.log(newVillain.punch());
