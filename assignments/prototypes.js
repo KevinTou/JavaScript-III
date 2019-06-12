@@ -132,53 +132,67 @@ console.log(swordsman.destroy()); // Sir Mustachio was removed from the game.
 // * Give the Hero and Villains different methods that could be used to remove health points from objects which could result in destruction if health gets to 0 or drops below 0;
 // * Create two new objects, one a villain and one a hero and fight it out with methods!
 
-// Humanoid.prototype.punch = function() {
-//   let damage = Math.round(Math.random() * 3);
-//   this.healthPoints = this.healthPoints - damage;
-//   return `${this.name} took a punch to the face and took ${damage} damage. ${
-//     this.healthPoints
-//   } remaining.`;
-// };
+Humanoid.prototype.punch = function() {
+  let damage = Math.round(Math.random() * 3);
+  this.healthPoints = this.healthPoints - damage;
+  if (this.healthPoints <= 0) {
+    this.healthPoints = 0;
+  }
+  return `${this.name} took a punch to the face and took ${damage} damage. ${
+    this.healthPoints
+  } remaining.`;
+};
 
-// function Villain(villainStats) {
-//   Humanoid.call(this, villainStats);
-// }
+function Villain(villainStats) {
+  Humanoid.call(this, villainStats);
+}
 
-// Villain.prototype = Object.create(Humanoid.prototype);
+Villain.prototype = Object.create(Humanoid.prototype);
 
-// function Hero(heroStats) {
-//   Humanoid.call(this, heroStats);
-// }
+function Hero(heroStats) {
+  Humanoid.call(this, heroStats);
+}
 
-// Hero.prototype = Object.create(Humanoid.prototype);
+Hero.prototype = Object.create(Humanoid.prototype);
 
-// const newVillain = new Villain({
-//   createdAt: new Date(),
-//   dimensions: {
-//     length: 2,
-//     width: 2,
-//     height: 2
-//   },
-//   healthPoints: 15,
-//   name: "Sir Mustachio",
-//   team: "The Round Table",
-//   weapons: ["Giant Sword", "Shield"],
-//   language: "Common Tongue"
-// });
+const newVillain = new Villain({
+  healthPoints: 15,
+  name: "Villain"
+});
 
-// const newHero = new Hero({
-//   createdAt: new Date(),
-//   dimensions: {
-//     length: 1,
-//     width: 2,
-//     height: 4
-//   },
-//   healthPoints: 10,
-//   name: "Lilith",
-//   team: "Forest Kingdom",
-//   weapons: ["Bow", "Dagger"],
-//   language: "Elvish"
-// });
+const newHero = new Hero({
+  healthPoints: 15,
+  name: "Hero"
+});
 
-// console.log(newHero.punch());
-// console.log(newVillain.punch());
+let game = true;
+
+while (game) {
+  if (newVillain.healthPoints <= 0) {
+    console.log(newVillain.destroy());
+    break;
+  } else if (newHero.healthPoints <= 0) {
+    console.log(newHero.destroy());
+    break;
+  }
+
+  console.log(newVillain.punch());
+
+  if (newVillain.healthPoints <= 0) {
+    console.log(newVillain.destroy());
+    break;
+  } else if (newHero.healthPoints <= 0) {
+    console.log(newHero.destroy());
+    break;
+  }
+
+  console.log(newHero.punch());
+
+  if (newVillain.healthPoints <= 0) {
+    console.log(newVillain.destroy());
+    break;
+  } else if (newHero.healthPoints <= 0) {
+    console.log(newHero.destroy());
+    break;
+  }
+}
